@@ -6,13 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "server": "json-server -p3001 /Users/clairework/travel-log/app/api/db.json"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.14",
     "@mui/material": "^5.15.14",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@mui/x-date-pickers": "^7.1.0",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
@@ -23,10 +25,13 @@
     "react-bootstrap": "^2.10.2",
     "react-date-picker": "^10.6.0",
     "react-datepicker": "^6.6.0",
+    "react-day-picker": "^8.10.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.3"
+    "react-router-dom": "^6.22.3",
+    "styled-components": "^6.1.8"
   },
   "devDependencies": {
+    "@types/date-fns": "^2.6.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

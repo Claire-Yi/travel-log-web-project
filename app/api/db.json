@@ -1,9 +1,73 @@
 {
-    "trips": [
-      { "id": 0, "name": "Japan", "dateCreated": "2022-04-01T12:00:00Z", "dateOfTrip": "2024-05-01", "tripGuest": "Nick", "guideSection": [{"sectionName": "Restaurants"}, {"sectionContent": ["Momo", "Ramen Dambo"]} ]},
-      { "id": 1, "name": "Shanghai", "dateCreated": "2022-04-03T12:00:00Z", "dateOfTrip": "2024-09-02" },
-      { "id": 2, "name": "San Francisco", "dateCreated": "2023-04-04T12:00:00Z", "dateOfTrip": "2024-10-11" },
-      { "id": 3, "name": "Portland", "dateCreated": "2023-04-06T12:00:00Z", "dateOfTrip": "2024-12-02" }
-    ]
-  }
-  
+  "trips": [
+    {
+      "id": 0,
+      "name": "Japan",
+      "dateCreated": "2022-04-01T12:00:00Z",
+      "startDate": "2024-05-01",
+      "endDate": "2024-05-03",
+      "tripGuest": "Nick",
+      "guideSection": [
+        {
+          "sectionName": "Restaurants"
+        },
+        {
+          "sectionContent": [
+            "Momo",
+            "Ramen Dambo"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Shanghai",
+      "dateCreated": "2022-04-03T12:00:00Z",
+      "startDate": "2024-09-02"
+    },
+    {
+      "id": 2,
+      "name": "San Francisco",
+      "dateCreated": "2023-04-04T12:00:00Z",
+      "startDate": "2024-10-11"
+    },
+    {
+      "id": 3,
+      "name": "Portland",
+      "dateCreated": "2023-04-06T12:00:00Z",
+      "startDate": "2024-12-02"
+    },
+    {
+      "id": "d468",
+      "from": "2024-04-23T07:00:00.000Z",
+      "to": "2024-05-03T00:00:00.000Z"
+    },
+    {
+      "id": "df23",
+      "from": "2024-04-23T07:00:00.000Z",
+      "to": "2024-04-30T07:00:00.000Z"
+    },
+    {
+      "id": "0860"
+    },
+    {
+      "id": "f839",
+      "from": "2024-04-10T07:00:00.000Z"
+    },
+    {
+      "id": "7310",
+      "from": "2024-04-10T07:00:00.000Z",
+      "to": "2024-04-12T07:00:00.000Z"
+    },
+    {
+      "id": "3afd",
+      "from": "2024-04-01T07:00:00.000Z",
+      "to": "2024-04-12T07:00:00.000Z"
+    },
+    {
+      "id": "5754",
+      "from": "2024-04-01T07:00:00.000Z",
+      "to": "2024-04-03T07:00:00.000Z"
+    }
+  ]
+}

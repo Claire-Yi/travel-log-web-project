@@ -8,12 +8,12 @@ import { Button } from 'react-bootstrap';
 
 // specifying the props Trip expect to receive, and type of each prop
 export interface Trip {
-  id: Number;
-  name?: String;
+  id: number;
+  name?: string;
 // should the type be Date here?
-  dateCreated: String;
-  dateOfTrip?: String;
-  // Other trip data
+  dateCreated: string;
+  startDate?: string;
+  endDate?: string;
 }
 
 // specifying prop TripCardProps expects to receive, and type of the prop
@@ -25,8 +25,11 @@ interface TripCardProps {
 //defines that TripCard expects to receive TripCardProps as property and extract 'trip' prop from TripCardProps
 // it could've been ({id: number; name:string...}) instead of ({trip})?
 const TripCard: React.FC<TripCardProps> = ({ trip }) => {
-    const parsedDateOfTrip = parseISO(trip.dateOfTrip);
-    const formattedDateOfTrip = format(parsedDateOfTrip, 'MMMM d, yyyy');
+    const newStartDate = trip.startDate ? parseISO(trip.startDate) : null;
+    const formattedStartDate = newStartDate ? format(newStartDate, 'MMMM d, yyyy') : '';
+
+    const newEndDate = trip.endDate ? parseISO(trip.endDate): null;
+    const formattedEndDate = newEndDate ? format(newEndDate, 'MMMM d, yyyy') : '';
 
   return (
     <div className="trip-card block pb-4 space-y-4 overflow-hidden rounded-md hover:bg-neutral-100 transition duration-300">
@@ -34,7 +37,7 @@ const TripCard: React.FC<TripCardProps> = ({ trip }) => {
         <div className="flex justify-between items-start px-4">
             <div className="trip-details space-y-2">
                 <h2 className="text-md text-black">{trip.name}</h2>
-                <p className="text-xs text-black">{formattedDateOfTrip}</p>
+                <p className="text-xs text-black">{formattedStartDate}-{formattedEndDate}</p>
             </div>
             <div>
             <Button type="button" icon="/More.svg" variant="btn-icon"/>

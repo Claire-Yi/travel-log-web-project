@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios'; // Import Axios
 import MyDatePicker from '@/components/DatePicker';
 import Button from '@/components/Button';
+import { format } from 'date-fns';
 
 // In Next.js, when you create a dynamic route using square brackets [] in the filename of a page component, Next.js automatically provides a route parameter named id to that page component based on the structure of the URL.
 
@@ -13,6 +14,8 @@ const TripPage = () => {
   const {name} = useParams<{name: string}>(); // Access the id parameter from the URL
 
   const [trip, setTrip] = useState(null);
+  const [newStartDate, setNewStartDate] = useState('');
+  const [newEndDate, setNewEndDate] = useState('');
 
   useEffect(() => {
     const fetchTripByName = async () => {
@@ -40,9 +43,10 @@ const TripPage = () => {
   if (!trip) {
     return <div>Loading...</div>;
   }
+  console.log(trip);
 
   return (
-    <main className="w-full px-32 py-16">
+    <main className="w-full h-svh px-32 py-16">
       <nav>
         <Button type="button" icon="/Back.svg" variant="btn-icon"/>
         <div className='ButtonGroup flex justify-between w-full'>
@@ -53,7 +57,9 @@ const TripPage = () => {
       <header className='LogHeader'>
         <h1 className="text-black">{trip.name}</h1>
         <div className="ButtonGroup">
-          <MyDatePicker></MyDatePicker>
+          <div>
+            <MyDatePicker trip={trip}></MyDatePicker>
+          </div>
           <div className="GuestList"></div>
           <div className="Tags"></div>
         </div>
