@@ -23,6 +23,7 @@ function HomePage() {
           //console.log(trip.dateCreated);
         // });
         setTrips(data);
+        console.log(response.data);
       })
       .catch(error => console.error('Error fetching trips:', error));
   }, []);
@@ -46,7 +47,7 @@ function HomePage() {
       </header>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-20"> {/* trip card grid */}
         {trips.map(trip => (
-          <Link key={trip.id} href={`/trip/${trip.name}`}>{/* Wrap TripCard with Link */}
+          <Link key={trip.id} href={`/trip/${trip.id}`}>{/* Wrap TripCard with Link */}
             <TripCard trip={trip} />
           </Link>
         ))}

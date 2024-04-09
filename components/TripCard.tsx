@@ -7,7 +7,7 @@ import { Button } from 'react-bootstrap';
 
 
 // specifying the props Trip expect to receive, and type of each prop
-export interface Trip {
+interface Trip {
   id: number;
   name?: string;
 // should the type be Date here?

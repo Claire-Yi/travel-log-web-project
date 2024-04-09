@@ -1,42 +1,41 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import Button from './Button';
-import { addDays, format } from 'date-fns';
+import { addDays, format, parse } from 'date-fns';
 import { DateRange, DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-import axios from "axios";
+
 
 interface Trip {
-  dateCreated: string;
+  // dateCreated: string;
   startDate?: string;
   endDate?: string;
 }
 
-interface TripProps {
+interface MyDatePickerProps {
   trip: Trip;
+  onStartDateChange: (newStartDate: Date | undefined) => void;
+  onEndDateChange: (newEndDate: Date | undefined) => void;
 }
 
-const MyDatePicker: React.FC <TripProps>= ({trip}) => {
-  console.log('startDate:', trip.startDate);
+const MyDatePicker: React.FC <MyDatePickerProps>= ({trip, onStartDateChange, onEndDateChange}) => {
+  // console.log('startDate:', trip.startDate);
   const pastMonth = new Date();
-  const newStartDate = trip.startDate ? new Date(trip.startDate) : pastMonth;
-  const newEndDate = trip.endDate ? new Date(trip.endDate) : addDays(pastMonth, 0);
+  const existingStartDate = trip.startDate ? new Date(trip.startDate) : new Date();
+  const existingEndDate = trip.endDate ? new Date(trip.endDate) : new Date();
+  const defaultStartDate = existingStartDate ? existingStartDate : pastMonth;
+  const defaultEndDate = existingEndDate ? existingEndDate : addDays(pastMonth, 0);
   // state hook to set DatePicker to open or close, default to not show
   const [showDatePicker, setShowDatePicker] = useState(false);
-  // console.log('new start date', newStartDate)
 
-  const defaultSelected: DateRange | undefined = trip.startDate
-    ? trip.endDate
-      ? { from: newStartDate, to: newEndDate }
-      : { from: newStartDate, to: addDays(newStartDate, 0) }
-    : undefined;
-  console.log('defaultSelected', defaultSelected)
+// display start and end date if exist in db, otherwise display current date
+  const defaultSelected: DateRange | undefined = { from: defaultStartDate, to: defaultEndDate };
 
   const [range, setRange] = useState<DateRange | undefined>(defaultSelected);
-  console.log ('range', range)
-
-
-  let footer = <p className = "pt-4">pick the first day.</p>;
-  // check if there is a starting date
+  // const [newStartDate, setNewStartDate] = useState<Date | undefined>();
+  // console.log ("StartDate:", defaultStartDate);
+ 
+  
+  let footer = <p className = "pt-4"></p>;
   if (range?.from) {
     if (!range.to) {
       footer = <p className = "pt-4">{format(range.from, 'PPP')}</p>;
@@ -52,21 +51,14 @@ const MyDatePicker: React.FC <TripProps>= ({trip}) => {
   const handleButtonClick = () => {
     setShowDatePicker(!showDatePicker);
   };
-  const handleDateSelect = (selectedRange: DateRange) => {
-    sendDataToServer(selectedRange);
-    // Update local state
-    setRange(selectedRange);
-  };
 
-  const sendDataToServer = (selectedRange: DateRange) => {
-    // Make an HTTP request to your server to send the selected date range data
-      axios.post('http://localhost:3001/trips', selectedRange)
-      .then(response => {
-        console.log('Date range data sent successfully');
-      })
-      .catch(error => {
-        console.error('Error sending date range data:', error);
-      });
+  const handleDateSelect = (selectedRange: DateRange | undefined) => {
+    if (selectedRange) {
+      // Update local state
+    setRange(selectedRange);
+    onStartDateChange(selectedRange.from);
+    onEndDateChange(selectedRange.to);
+    }
   };
 
   return (
@@ -80,7 +72,7 @@ const MyDatePicker: React.FC <TripProps>= ({trip}) => {
           captionLayout="dropdown-buttons" fromYear={2015} toYear={2050}
           id="test"
           mode="range"
-          defaultMonth={newStartDate}
+          defaultMonth={defaultStartDate}
           selected={range}
           footer={footer}
           onSelect={handleDateSelect}
@@ -92,4 +84,4 @@ const MyDatePicker: React.FC <TripProps>= ({trip}) => {
   );
 };
 
-export default MyDatePicker
+export default MyDatePicker;
