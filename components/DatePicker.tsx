@@ -13,11 +13,12 @@ interface Trip {
 
 interface MyDatePickerProps {
   trip: Trip;
+  onRangeChange: (newRange: DateRange | undefined) => void;
   onStartDateChange: (newStartDate: Date | undefined) => void;
   onEndDateChange: (newEndDate: Date | undefined) => void;
 }
 
-const MyDatePicker: React.FC <MyDatePickerProps>= ({trip, onStartDateChange, onEndDateChange}) => {
+const MyDatePicker: React.FC <MyDatePickerProps>= ({trip, onRangeChange, onStartDateChange, onEndDateChange}) => {
   // console.log('startDate:', trip.startDate);
   const pastMonth = new Date();
   const existingStartDate = trip.startDate ? new Date(trip.startDate) : new Date();
@@ -35,14 +36,23 @@ const MyDatePicker: React.FC <MyDatePickerProps>= ({trip, onStartDateChange, onE
   // console.log ("StartDate:", defaultStartDate);
  
   
-  let footer = <p className = "pt-4"></p>;
+  let dateDisplay = <p className = "pt-4"></p>;
   if (range?.from) {
     if (!range.to) {
-      footer = <p className = "pt-4">{format(range.from, 'PPP')}</p>;
+      dateDisplay = <p className = "pt-4">{format(range.from, 'MMM')}{format(range.from, 'do')}</p>;
     } else if (range.to) {
-      footer = (
-        <p className = "pt-4">
-          {format(range.from, 'PPP')}–{format(range.to, 'PPP')}
+      dateDisplay = (
+        <p className = "pt-4 flex gap-2">
+          <div className="startDate flex gap-1">
+            <div>{format(range.from, 'MMM')}</div>
+            <div>{format(range.from, 'do')}</div>
+          </div>
+          –
+          <div className="endDate flex gap-1">
+            <div>{format(range.to, 'MMM')}</div>
+            <div>{format(range.to, 'do')}</div>
+            <div>{format(range.to, 'y')}</div>
+          </div>
         </p>
       );
     }
@@ -56,6 +66,7 @@ const MyDatePicker: React.FC <MyDatePickerProps>= ({trip, onStartDateChange, onE
     if (selectedRange) {
       // Update local state
     setRange(selectedRange);
+    onRangeChange(selectedRange);
     onStartDateChange(selectedRange.from);
     onEndDateChange(selectedRange.to);
     }
@@ -63,7 +74,8 @@ const MyDatePicker: React.FC <MyDatePickerProps>= ({trip, onStartDateChange, onE
 
   return (
     <>
-      <div className="Date Picker w-full h-64">
+      <div className="Date Picker flex-initial">
+        <div className='text-black py-4'>{dateDisplay}</div>
         <Button type="button" icon="/Calendar.svg" variant="btn-icon" onClick={handleButtonClick}></Button>
         {showDatePicker && (
           <div>
@@ -74,7 +86,7 @@ const MyDatePicker: React.FC <MyDatePickerProps>= ({trip, onStartDateChange, onE
           mode="range"
           defaultMonth={defaultStartDate}
           selected={range}
-          footer={footer}
+          // footer={footer}
           onSelect={handleDateSelect}
           />
           </div>

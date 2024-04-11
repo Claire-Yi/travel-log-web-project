@@ -11,7 +11,6 @@ const Navbar = () => {
           <Image src="/Triplog.svg" alt="logo" width={74} height={29} />
         </Link>
         <ul className="hidden gap-12 lg:flex">
-          {/* links not showing up */}
             {NAV_LINKS.map((link) => (
               <Link href="{link.href}" key={link.key} className="text-sm text-neutral-500 flex-center cursor-pointer transition-all hover:font-medium">
                 {link.label}

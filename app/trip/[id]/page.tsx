@@ -1,12 +1,15 @@
 'use client'
 
+// import MyLink from '@/components/MyLink';
+import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import axios from 'axios'; // Import Axios
 import MyDatePicker from '@/components/DatePicker';
 import Button from '@/components/Button';
-import TripName from '@/components/TripName';
+import TripNameForm from '@/components/TripNameForm';
 import { format } from 'date-fns';
 
 // In Next.js, when you create a dynamic route using square brackets [] in the filename of a page component, Next.js automatically provides a route parameter named id to that page component based on the structure of the URL.
@@ -21,8 +24,6 @@ const TripPage = () => {
   // const { name } = useParams<{ name: string }>();
   const { id } = useParams<{id:string}>();
   const [trip, setTrip] = useState<Trip | null>(null);
-  // const [newStartDate, setNewStartDate] = useState<Date | undefined>();
-  // const [newEndDate, setNewEndDate] = useState<Date | undefined>();
 
   
 // get trip data with id/url param and setTrip with db data
@@ -44,33 +45,33 @@ const TripPage = () => {
       fetchTripById();
     }
   }, [id]);
-  // console.log(trip);
+
 
   //log name input evenhandlers
-  const [tripName, setTripName] = useState(trip?.name ? trip.name : 'New Trip');
-  const [inputActive, setInputActive] = useState(false);
+  // const handleInputFocusChange = (isFocused: boolean) => {
+  //   setIsSaveButtonVisible(isFocused);
+  // };
 
-  const handleTripNameChange = (newTripName: string) => {
-    setTripName(newTripName);
-  };
-
-  const handleTripNameSave = async (newTripName: string | undefined) => {
-    await axios.patch(`http://localhost:3001/trips/${trip.name}`, { name: newTripName});
-    console.log('New log name:', newTripName);
-    setInputActive(false);
-    // } catch (error) {
-    //     console.error('Error updating log name', error);
-    // }
-  };
-
-  const handleInputFocus = () => {
-    setInputActive(true);
+  const handleTripNameSave = async (newTripName: string) => {
+    console.log("tripName on trip page", newTripName);
+    try {
+      await axios.patch(`http://localhost:3001/trips/${trip.id}`, { name: newTripName });
+      // setIsSaveButtonVisible(false);
+      console.log('Trip name updated successfully:', newTripName);
+    } catch (error) {
+      console.error('Error updating trip name:', error);
+    }
   };
 
     // date picker event handlers
+  const [tripDates, setTripDates] = useState('0');
+
+  const updateTripDates = async (newRange: DateRange) => {
+    setTripDates(newRange);
+  }
+
   const handleStartDateChange = async (newStartDate: Date) => {
     console.log('new startDate:', newStartDate);
-    // setNewStartDate(startDate);
     if (trip && newStartDate) {
       try {
         await axios.patch(`http://localhost:3001/trips/${trip.id}`, { startDate: newStartDate });
@@ -82,7 +83,6 @@ const TripPage = () => {
   };
 
   const handleEndDateChange = async (newEndDate: Date) => {
-    // setNewEndDate(endDate);
     if (trip && newEndDate) {
       try {
         await axios.patch(`http://localhost:3001/trips/${trip.id}`, { endDate: newEndDate });
@@ -101,26 +101,31 @@ const TripPage = () => {
   return (
     <main className="w-full h-svh px-32 py-16">
       <nav>
-        <Button type="button" icon="/Back.svg" variant="btn-icon" />
+        <Link href={"/"}>
+          <Image src="/Back.svg" alt="logo" width={24} height={24} />
+        </Link>
         <div className="ButtonGroup flex justify-between w-full">
           <Button type="button" icon="/More.svg" variant="btn-icon" />
           <Button type="button" icon="/ArrowLeft.svg" label="Expand Map" variant="btn-secondary" />
         </div>
       </nav>
       <header className="LogHeader">
-        <div  className="text-black" onClick={handleInputFocus}>
-          <TripName onSave={handleTripNameChange}>{tripName}</TripName>
-          {inputActive && (
-        <button onClick={handleTripNameSave}>Save</button>
-        )}
-        </div>
+        <div  className="text-black">
+          <TripNameForm 
+            trip={trip}
+            onTripNameSave={handleTripNameSave}
+            >
+          </TripNameForm>
+          </div>
         <div className="ButtonGroup">
           <div>
             <MyDatePicker
               trip={trip}
+              onRangeChange={updateTripDates}
               onStartDateChange={handleStartDateChange}
               onEndDateChange={handleEndDateChange}
-            />
+            >
+            </MyDatePicker>
           </div>
           <div className="GuestList"></div>
           <div className="Tags"></div>

@@ -2,25 +2,26 @@
   "trips": [
     {
       "id": "0",
-      "name": "Japan",
+      "name": "Trip to USA",
       "dateCreated": "2022-04-01T12:00:00Z",
       "startDate": "2024-04-01T07:00:00.000Z",
       "endDate": "2024-04-03T07:00:00.000Z"
     },
     {
-      "id": 1,
+      "id": "1",
       "name": "Shanghai",
       "dateCreated": "2022-04-03T12:00:00Z",
       "startDate": "2024-09-02"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "San Francisco",
       "dateCreated": "2023-04-04T12:00:00Z",
-      "startDate": "2024-10-11"
+      "startDate": "2024-10-01T07:00:00.000Z",
+      "endDate": "2024-10-09T07:00:00.000Z"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Portland",
       "dateCreated": "2023-04-06T12:00:00Z",
       "startDate": "2024-12-02"

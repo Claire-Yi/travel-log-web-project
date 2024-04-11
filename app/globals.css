@@ -30,9 +30,15 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  
+  .lnk-icon {
+    @apply flex justify-between items-center rounded-full w-6 h-6 px-2 py-2 bg-white transition-all hover:bg-neutral-100
+  }
+
+
 /* why is the btn being called not reflecting these utility classes */
   .btn-icon { 
-    @apply flex justify-between items-center rounded-full px-2 py-2 bg-white text-base transition-all hover:bg-neutral-100
+    @apply flex justify-between items-center rounded-full px-2 py-2 bg-white transition-all hover:bg-neutral-100
   }
 
   .btn_white_text  { 
