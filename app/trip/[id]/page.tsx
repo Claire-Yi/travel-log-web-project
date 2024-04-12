@@ -5,12 +5,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useParams, usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // Import Axios
 import MyDatePicker from '@/components/DatePicker';
 import Button from '@/components/Button';
 import TripNameForm from '@/components/TripNameForm';
 import { format } from 'date-fns';
+import AddBlockDropdown from '@/components/AddBlockDropdown';
+import LogContent from '@/components/LogContent';
 
 // In Next.js, when you create a dynamic route using square brackets [] in the filename of a page component, Next.js automatically provides a route parameter named id to that page component based on the structure of the URL.
 interface Trip {
@@ -24,7 +26,6 @@ const TripPage = () => {
   // const { name } = useParams<{ name: string }>();
   const { id } = useParams<{id:string}>();
   const [trip, setTrip] = useState<Trip | null>(null);
-
   
 // get trip data with id/url param and setTrip with db data
   useEffect(() => {
@@ -47,11 +48,7 @@ const TripPage = () => {
   }, [id]);
 
 
-  //log name input evenhandlers
-  // const handleInputFocusChange = (isFocused: boolean) => {
-  //   setIsSaveButtonVisible(isFocused);
-  // };
-
+  // trip name event handler
   const handleTripNameSave = async (newTripName: string) => {
     console.log("tripName on trip page", newTripName);
     try {
@@ -62,6 +59,7 @@ const TripPage = () => {
       console.error('Error updating trip name:', error);
     }
   };
+
 
     // date picker event handlers
   const [tripDates, setTripDates] = useState('0');
@@ -99,12 +97,12 @@ const TripPage = () => {
   }
 
   return (
-    <main className="w-full h-svh px-32 py-16">
-      <nav>
+    <main className="w-full h-svh px-24 py-8">
+      <nav className="flex items-center justify-between py-4 mx-4">
         <Link href={"/"}>
           <Image src="/Back.svg" alt="logo" width={24} height={24} />
         </Link>
-        <div className="ButtonGroup flex justify-between w-full">
+        <div className="ButtonGroup flex justify-between gap-2">
           <Button type="button" icon="/More.svg" variant="btn-icon" />
           <Button type="button" icon="/ArrowLeft.svg" label="Expand Map" variant="btn-secondary" />
         </div>
@@ -131,6 +129,9 @@ const TripPage = () => {
           <div className="Tags"></div>
         </div>
       </header>
+      <div className="log content text-black">
+        <LogContent/>
+      </div>
     </main>
   );
 };

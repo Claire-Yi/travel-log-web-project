@@ -36,13 +36,20 @@ const MyDatePicker: React.FC <MyDatePickerProps>= ({trip, onRangeChange, onStart
   // console.log ("StartDate:", defaultStartDate);
  
   
-  let dateDisplay = <p className = "pt-4"></p>;
+  let dateDisplay = <p></p>;
   if (range?.from) {
     if (!range.to) {
-      dateDisplay = <p className = "pt-4">{format(range.from, 'MMM')}{format(range.from, 'do')}</p>;
+      dateDisplay = (
+      <p className = "pt-4">
+        <div className="startDate flex gap-1">
+            <div>{format(range.from, 'MMM')}</div>
+            <div>{format(range.from, 'do')}</div>
+        </div>
+      </p>
+      );
     } else if (range.to) {
       dateDisplay = (
-        <p className = "pt-4 flex gap-2">
+        <p className = "flex gap-2">
           <div className="startDate flex gap-1">
             <div>{format(range.from, 'MMM')}</div>
             <div>{format(range.from, 'do')}</div>
@@ -74,11 +81,11 @@ const MyDatePicker: React.FC <MyDatePickerProps>= ({trip, onRangeChange, onStart
 
   return (
     <>
-      <div className="Date Picker flex-initial">
-        <div className='text-black py-4'>{dateDisplay}</div>
-        <Button type="button" icon="/Calendar.svg" variant="btn-icon" onClick={handleButtonClick}></Button>
+      <div className="Date Picker">
+        {/* <div className='text-black pb-2'>{dateDisplay}</div> */}
+        <Button type="button" icon="/Calendar.svg" variant="btn-tertiary" onClick={handleButtonClick} label={dateDisplay}></Button>
         {showDatePicker && (
-          <div>
+          <div className="flex-col">
             <DayPicker
           className="text-black font-light"
           captionLayout="dropdown-buttons" fromYear={2015} toYear={2050}
@@ -89,7 +96,7 @@ const MyDatePicker: React.FC <MyDatePickerProps>= ({trip, onRangeChange, onStart
           // footer={footer}
           onSelect={handleDateSelect}
           />
-          </div>
+        </div>
         )}
       </div>
     </>

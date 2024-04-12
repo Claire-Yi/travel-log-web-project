@@ -43,7 +43,7 @@ const TripNameForm: React.FC <tripNameFormProps>= ({trip, onTripNameSave}) => {
   return (
     <form>
       <input
-      className="rounded-lg hover:bg-neutral-100 text-lg p-2 gap-4  " 
+      className="rounded-lg hover:bg-neutral-100 text-2xl font-light gap-4 px-4 py-2 mb-2" 
       value={tripName}
       type="text"
       maxLength={40}

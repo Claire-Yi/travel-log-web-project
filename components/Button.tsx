@@ -5,7 +5,7 @@ type ButtonProps = {
   type: "button" | "submit";
   label?: string;
   icon?: string;
-  variant: "btn-primary" | "btn-secondary" | "btn-icon";
+  variant: "btn-primary" | "btn-secondary" | "btn-icon" | "btn-tertiary";
   onClick?: () => void;
 }
 
